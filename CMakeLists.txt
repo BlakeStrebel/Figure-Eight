@@ -9,6 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   message_generation
+  turtlesim
 )
 
 ## System dependencies are found with CMake's conventions
@@ -70,6 +71,7 @@ find_package(catkin REQUIRED COMPONENTS
    DEPENDENCIES
    geometry_msgs
    std_msgs
+   turtlesim
 )
 
 ################################################
@@ -104,7 +106,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES figure8
-CATKIN_DEPENDS geometry_msgs message_runtime
+CATKIN_DEPENDS geometry_msgs message_runtime turtlesim
 #  DEPENDS system_lib
 )
 
