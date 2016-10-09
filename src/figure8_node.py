@@ -20,7 +20,7 @@ def control_turtle():
     rate = rospy.Rate(10)
 
     t = 0.0 # time
-    T = rospy.get_param('/period',10)
+    T = rospy.get_param('~period',10)
 
     trajectory = Twist()
     trajectory.linear.y = 0
