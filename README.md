@@ -7,17 +7,23 @@ For this section, ROS command line tools were used in order to determine informa
 1. The node `ros_cl_demo` contains one publisher and one subscriber.
   1. The names of the topics were found by using the `rosnode info` tool. These topics are `/demo_publish_topic` and `/demo_subscriber_topic`.
   2. Running `rostopic echo` causes the messages for a topic to be printed to the screen. The message can be further analyzed using `rosmsg show`.
-    * `/demo_publish_topic` contains an integer `seq` which increments by one each time a new message is published, a time `stamp`, a string containing `frame_id`, a float containing `time`, and a float containing `configuration`
-    * `/demo_subscriber_topic` does not print any messages when running `rostopic echo`.
+    * The `/demo_publish_topic` publishes a message which contains an integer `seq` which increments by one each time a new message is published, a time `stamp`, a string containing `frame_id`, a float containing `time`, and a float containing `configuration`
+    * The `/demo_subscriber_topic` subscribes to a message which contains a String `data`.
   3. Message packages were found by running `rostopic info` on each node. The `/demo_publish_topic` is of type `ME495Pub` while the `/demo_subscriber_topic` is of type `std_msgs/String`.
   4. The publisher `/demo_publish_topic` publishes data at around `50 Hz`. This rate was determined by using the `rostopic hz` tool.
   5. The `/demo_publish_topic` data was was plotted using `rqt_plot /demo_publish_topic`. From the plot, the topic is publishing configuration data that oscillates in a sinusoidal waveform from -10 to 10. It also publishes time data that increases linearly as expected.
-  6. A message of type `std_msg/String` is published using the `rostopic pub` tool. This results in `Manipulated String` data being printed to the terminal where `ros_cl_demo` is running.
-
+  6. A message of type `std_msg/String` is published using the `rostopic pub` tool. The subscriber inverts the order of the characters in the input string and the manipulated string is printed to the terminal where the node is running. For example, typing:
+  ```
+  rostopic pub /demo_subscriber_tic std_msgs/String "Hello"
+  ```
+  Results in the following being printed to the node terminal:
+  ```
+  [ INFO] [1476045302.234362951]: Manipulated String: olleH
+  ```
 2. The node `ros_cl_demo` also contains one service provider.
-  1. The names of all services in a package can be found using the `rossrv package` tool. The only service in the `me495_hw1` package is `ME495Srv`.
-  2. The service description can be found using `rossrv show`. The `me495_hw1/ME495Srv` service requests an unsigned 32 bit integer as an input and outputs an unsigned 8 bit integer.
-  3.
+  1. The names of service providers can be found using `rosservice list`. The node contains a unique service `/me495_math_server` in addition to the usual logging servers.
+  2. The service description can be found using `rosservice info`. The service is of type `me495_hw1/ME495Srv`. More information about this type can be found using the `rossrv show` tool. The `me495_hw1/ME495Srv` service type requests an unsigned 32 bit integer as an input and outputs an unsigned 8 bit integer.
+  3. The service can be called using the `rosservice call` tool. This service returns the number of digits of the input argument.
 
 ## Working with the turtlesim package ##
 The purpose of the `figure8` package is to interface with the existing [turtlesim package](http://wiki.ros.org/turtlesim) in order to make the turtle follow a reference trajectory.
